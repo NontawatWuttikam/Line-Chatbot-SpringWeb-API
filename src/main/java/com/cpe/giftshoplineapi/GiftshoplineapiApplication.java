@@ -1,7 +1,9 @@
 package com.cpe.giftshoplineapi;
 
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
@@ -21,6 +23,7 @@ public class GiftshoplineapiApplication {
 	public Message handleTextMessage(MessageEvent<TextMessageContent> e) {
 		System.out.println("event: " + e);
 		TextMessageContent message = e.getMessage();
+		//ImageMessage img = new ImageMessage();
 		return new TextMessage(message.getText());
 	}
 
