@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
+public class ProductMessageService {
 
     @Autowired
     ProductRepository productRepository;
@@ -53,4 +53,5 @@ public class ProductService {
         return productInfo;
 
     }
+
 }
