@@ -1,4 +1,4 @@
-package com.service;
+package com.cpe.giftshoplineapi.service;
 
 import com.linecorp.bot.model.message.ImageMessage;
 import com.model.Product;

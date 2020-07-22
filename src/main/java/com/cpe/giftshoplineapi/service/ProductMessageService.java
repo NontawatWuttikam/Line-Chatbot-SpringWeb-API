@@ -1,4 +1,4 @@
-package com.service;
+package com.cpe.giftshoplineapi.service;
 
 import com.model.Product;
 import com.repository.ProductRepository;

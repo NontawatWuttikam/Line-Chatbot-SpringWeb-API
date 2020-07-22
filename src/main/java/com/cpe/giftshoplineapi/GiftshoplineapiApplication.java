@@ -1,5 +1,6 @@
 package com.cpe.giftshoplineapi;
 
+import com.cpe.giftshoplineapi.controller.TestController;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -14,11 +15,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 @LineMessageHandler
 @Configuration
+@ComponentScan(basePackages = {"com.cpe.giftshoplineapi.controller"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class GiftshoplineapiApplication {
 
