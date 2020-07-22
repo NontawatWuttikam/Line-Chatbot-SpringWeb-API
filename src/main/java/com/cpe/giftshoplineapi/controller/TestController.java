@@ -1,5 +1,6 @@
 package com.cpe.giftshoplineapi.controller;
 
+import com.cpe.giftshoplineapi.service.ProductMessageService;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
@@ -20,6 +21,9 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class TestController {
 
+    @Autowired
+    ProductMessageService productMessageService;
+
     public static final String COL_NAME="ProductInfo";
 
     @GetMapping("/test")
@@ -38,7 +42,13 @@ public class TestController {
             }
 
             return productInfos;
-        }
+    }
+
+    @GetMapping("/linetest")
+    public String testLingMessage() throws ExecutionException, InterruptedException {
+        return productMessageService.getAllProductLineMessage();
+    }
+
 
     @PostConstruct
     public void initialize() {

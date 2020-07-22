@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @LineMessageHandler
 @Configuration
-@ComponentScan(basePackages = {"com.cpe.giftshoplineapi.controller"})
+@ComponentScan(basePackages = {"com.cpe.giftshoplineapi"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class GiftshoplineapiApplication {
 

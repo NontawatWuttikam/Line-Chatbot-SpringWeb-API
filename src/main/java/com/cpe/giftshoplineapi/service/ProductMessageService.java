@@ -3,7 +3,6 @@ package com.cpe.giftshoplineapi.service;
 import com.cpe.giftshoplineapi.Repository.ProductRepository;
 import com.model.Product;
 import com.model.ProductInfo;
-import com.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +27,12 @@ public class ProductMessageService {
                 productstr = o.getName() + "(หมด)";
             return productstr;}).collect(Collectors.toList());
 
+        int i = 1;
         for (String productString : productStr) {
-            msg += productString + "\n";
+            msg += i + ". " + productString + "\n";
         }
 
-        msg = "กรุณาพิมพ์หมายเลขด้านหน้าสินค้าเพื่อดูข้อมูล";
+        msg += "กรุณาพิมพ์หมายเลขด้านหน้าสินค้าเพื่อดูข้อมูล";
         return msg;
     }
 
