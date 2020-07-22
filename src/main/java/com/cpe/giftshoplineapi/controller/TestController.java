@@ -44,7 +44,7 @@ public class TestController {
     public void initialize() {
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("D:\\code_sandbox\\giftshoplineapi\\giftshoplineapi\\src\\main\\java\\com\\cpe\\giftshoplineapi\\controller\\trishudagiftshop-firebase-adminsdk-fz4a5-8c5abbfb1d.json");
+                    new FileInputStream("src/main/java/com/cpe/giftshoplineapi/controller/trishudagiftshop-firebase-adminsdk-fz4a5-8c5abbfb1d.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))

@@ -1,11 +1,14 @@
 package com.cpe.giftshoplineapi.service;
 
+import com.cpe.giftshoplineapi.Repository.ProductRepository;
 import com.model.Product;
+import com.model.ProductInfo;
 import com.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,15 +17,15 @@ public class ProductMessageService {
     @Autowired
     ProductRepository productRepository;
 
-    public String getAllProductLineMessage() {
+    public String getAllProductLineMessage() throws ExecutionException, InterruptedException {
         String msg = "รายชื่อสินค้าของร้านทั้งหมด\n";
-        List<Product> productList;
+        List<ProductInfo> productList;
         List<String> productStr;
         productList = this.getAllProductList();
         productStr = productList.stream().map( o-> {
-             String productstr = o.getProductName();
+             String productstr = o.getName();
              if (o.getQuantity() == 0)
-                productstr = o.getProductName() + "(หมด)";
+                productstr = o.getName() + "(หมด)";
             return productstr;}).collect(Collectors.toList());
 
         for (String productString : productStr) {
@@ -33,21 +36,21 @@ public class ProductMessageService {
         return msg;
     }
 
-    public List<Product> getAllProductList() {
-        List<Product> productList;
-        productList = productRepository.findAll();
+    public List<ProductInfo> getAllProductList() throws ExecutionException, InterruptedException {
+        List<ProductInfo> productList;
+        productList = productRepository.getProductInfo();
         return productList;
     }
 
-    public String getSpecificProduct(Integer index) {
+    public String getSpecificProduct(Integer index) throws ExecutionException, InterruptedException {
         String productInfo = "";
-        List<Product> productList = getAllProductList();
+        List<ProductInfo> productList = getAllProductList();
         if (index > productList.size())
             return "ไม่พบสินค้าที่คุณร้องขอ กรุณาเลือกใหม่อีกครั้ง";
 
-        Product product = productList.get(index-1);
+        ProductInfo product = productList.get(index-1);
         String productDescription = (product.getDescription() != null)? product.getDescription() : "";
-        productInfo = product.getProductName() + "\n\n" +
+        productInfo = product.getName() + "\n\n" +
                       productDescription + "\n\n" +
                       "จำนวนในคลัง : " + product.getQuantity();
         return productInfo;
