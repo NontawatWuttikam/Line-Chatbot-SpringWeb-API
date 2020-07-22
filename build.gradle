@@ -19,6 +19,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 	// https://mvnrepository.com/artifact/com.linecorp.bot/line-bot-spring-boot
+// https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+	compile group: 'com.google.firebase', name: 'firebase-admin', version: '6.14.0'
 	compile group: 'com.linecorp.bot', name: 'line-bot-spring-boot', version: '3.6.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
