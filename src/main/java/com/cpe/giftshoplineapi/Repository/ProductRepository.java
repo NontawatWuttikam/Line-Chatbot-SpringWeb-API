@@ -31,7 +31,8 @@ public class ProductRepository {
             String productName = (String) queryDocumentSnapshot.getData().get("Name");
             Long Quantity = (Long) queryDocumentSnapshot.getData().get("Quantity");
             String storeURL = (String) queryDocumentSnapshot.getData().get("StoreURL");
-            productInfos.add(new ProductInfo(productName,Quantity,storeURL));
+            String imageURL = (String) queryDocumentSnapshot.getData().get("ImageURL");
+            productInfos.add(new ProductInfo(productName,Quantity,storeURL,imageURL));
         }
 
         return productInfos;

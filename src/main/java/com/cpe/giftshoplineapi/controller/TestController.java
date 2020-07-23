@@ -1,12 +1,19 @@
 package com.cpe.giftshoplineapi.controller;
 
+import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.ImageMessage;
+import com.linecorp.bot.model.message.Message;
+import com.linecorp.bot.model.message.TextMessage;
 import com.model.ProductInfo;
 import com.cpe.giftshoplineapi.service.FBService;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.google.api.core.ApiFuture;
 import com.google.firebase.cloud.FirestoreClient;
@@ -15,7 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 @RestController
@@ -48,6 +58,42 @@ public class TestController {
     @GetMapping("/linetest")
     public String testLingMessage() throws ExecutionException, InterruptedException {
         return productMessageService.getAllProductLineMessage();
+    }
+
+    @GetMapping("/test2")
+    public List<Message> handleTextMessage() throws ExecutionException, InterruptedException {
+        TextMessageContent message = new TextMessageContent("1","1");
+        try {
+            Integer queryNumber = Integer.parseInt(message.getText());
+            String replyMessage = productMessageService.getSpecificProduct(queryNumber);
+            TextMessage textMessage = new TextMessage(replyMessage);
+            ProductInfo productInfo = productMessageService.getProduct(queryNumber);
+            URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
+            ImageMessage imageMessage = new ImageMessage(uri,uri);
+            return Arrays.asList(textMessage,imageMessage);
+        }
+        catch(NumberFormatException ne) {
+            if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
+                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.HELP));
+            }
+            else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
+                return Arrays.asList(new TextMessage(productMessageService.getAllProductLineMessage()));
+            }
+            else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
+                //return new TextMessage(productMessageService.getAllProductLineMessage());
+            }
+            else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
+                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE));
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        } catch (ExecutionException executionException) {
+            executionException.printStackTrace();
+        } catch (URISyntaxException uriSyntaxException) {
+            uriSyntaxException.printStackTrace();
+        }
+        //ImageMessage img = new ImageMessage();
+        //return new TextMessage(message.getText() + "TEST");
+        return null;
     }
 
 
