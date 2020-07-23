@@ -84,6 +84,7 @@ public class GiftshoplineapiApplication {
 		//ImageMessage img = new ImageMessage();
 		//return new TextMessage(message.getText() + "TEST");
 		return null;
+
 	}
 
 }
