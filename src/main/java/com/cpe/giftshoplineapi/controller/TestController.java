@@ -28,20 +28,21 @@ public class TestController {
 
     @GetMapping("/test")
     public List<ProductInfo> getProductInfo() throws InterruptedException, ExecutionException {
-            FirebaseApp firebaseApp = FirebaseApp.getInstance();
-            Firestore dbFirestore = FirestoreClient.getFirestore();
-            CollectionReference collectionReference = dbFirestore.collection(COL_NAME);
-            ApiFuture<QuerySnapshot> future = collectionReference.get();
-
-            QuerySnapshot document = future.get();
-            List<ProductInfo> productInfos = new ArrayList<>();
-            for (QueryDocumentSnapshot queryDocumentSnapshot : document.getDocuments()) {
-                String productName = (String) queryDocumentSnapshot.getData().get("Name");
-                Long Quantity = (Long) queryDocumentSnapshot.getData().get("Quantity");
-                productInfos.add(new ProductInfo(productName,Quantity));
-            }
-
-            return productInfos;
+//            FirebaseApp firebaseApp = FirebaseApp.getInstance();
+//            Firestore dbFirestore = FirestoreClient.getFirestore();
+//            CollectionReference collectionReference = dbFirestore.collection(COL_NAME);
+//            ApiFuture<QuerySnapshot> future = collectionReference.get();
+//
+//            QuerySnapshot document = future.get();
+//            List<ProductInfo> productInfos = new ArrayList<>();
+//            for (QueryDocumentSnapshot queryDocumentSnapshot : document.getDocuments()) {
+//                String productName = (String) queryDocumentSnapshot.getData().get("Name");
+//                Long Quantity = (Long) queryDocumentSnapshot.getData().get("Quantity");
+//                productInfos.add(new ProductInfo(productName,Quantity,));
+//            }
+//
+//            return productInfos;
+        return null;
     }
 
     @GetMapping("/linetest")
