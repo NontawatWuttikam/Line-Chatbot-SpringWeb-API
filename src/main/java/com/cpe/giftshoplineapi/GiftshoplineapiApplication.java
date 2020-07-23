@@ -1,6 +1,7 @@
 package com.cpe.giftshoplineapi;
 
 import com.cpe.giftshoplineapi.controller.TestController;
+import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
@@ -35,6 +36,7 @@ public class GiftshoplineapiApplication {
 	@Autowired
 	ProductMessageService productMessageService;
 
+
 	@EventMapping
 	public Message handleTextMessage(MessageEvent<TextMessageContent> e) {
 		System.out.println("event: " + e);
@@ -45,7 +47,8 @@ public class GiftshoplineapiApplication {
 			return new TextMessage(replyMessage);
 		}
 		catch(NumberFormatException ne) {
-
+			if (message.getText() == "ขั้นตอนการซื้อสินค้า")
+				return new TextMessage(MessageHandler.STORE_PAGE);
 		} catch (InterruptedException interruptedException) {
 			interruptedException.printStackTrace();
 		} catch (ExecutionException executionException) {
