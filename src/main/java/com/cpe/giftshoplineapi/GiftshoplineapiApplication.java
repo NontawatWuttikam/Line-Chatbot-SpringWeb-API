@@ -47,7 +47,7 @@ public class GiftshoplineapiApplication {
 			return new TextMessage(replyMessage);
 		}
 		catch(NumberFormatException ne) {
-			if (message.getText() == "ขั้นตอนการซื้อสินค้า")
+			if (message.getText().equals("ขั้นตอนการซื้อสินค้า"))
 				return new TextMessage(MessageHandler.STORE_PAGE);
 		} catch (InterruptedException interruptedException) {
 			interruptedException.printStackTrace();
