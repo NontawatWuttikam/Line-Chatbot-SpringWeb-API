@@ -3,6 +3,7 @@ package com.cpe.giftshoplineapi;
 import com.cpe.giftshoplineapi.controller.TestController;
 import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
+import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
@@ -48,6 +49,7 @@ public class GiftshoplineapiApplication {
 	@Autowired
 	ProductMessageService productMessageService;
 
+	LineMessagingClient client;
 
 	@EventMapping
 	public List<Message> handleTextMessage(MessageEvent<TextMessageContent> e) throws ExecutionException, InterruptedException {
@@ -60,7 +62,15 @@ public class GiftshoplineapiApplication {
 			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
 			URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
 			ImageMessage imageMessage = new ImageMessage(uri,uri);
-			return Arrays.asList(textMessage,imageMessage);
+
+			client.getMessageContent(e.getMessage().getId()).thenAccept(messageContentResponse -> {
+
+				final TextMessage msg = new TextMessage("getMessageContent successfully finished. "
+						+ messageContentResponse);
+
+				client.pushMessage(new PushMessage(e.getSource().getSenderId(), msg));
+			});
+			return Arrays.asList(textMessage,textMessage);
 		}
 		catch(NumberFormatException ne) {
 			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
