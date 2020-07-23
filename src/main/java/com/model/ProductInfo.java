@@ -12,9 +12,10 @@ public class ProductInfo {
     private String promotionInfo;
     private String imageURL;
 
-    public ProductInfo(String name, Long quantity) {
+    public ProductInfo(String name, Long quantity,String storeURL) {
         this.name = name;
         this.quantity = quantity;
+        this.storeURL = storeURL;
     }
 
     public String getImageURL() {

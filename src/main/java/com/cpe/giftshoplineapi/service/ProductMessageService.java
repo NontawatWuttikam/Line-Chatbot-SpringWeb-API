@@ -30,7 +30,7 @@ public class ProductMessageService {
 
         int i = 1;
         for (String productString : productStr) {
-            msg += i + ". " + productString + "\n";
+            msg += i + ". " + productString + "\n\n";
             i++;
         }
 
