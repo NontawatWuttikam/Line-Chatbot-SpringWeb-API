@@ -27,9 +27,11 @@ public class ProductMessageService {
                 productstr = o.getName() + "(หมด)";
             return productstr;}).collect(Collectors.toList());
 
+
         int i = 1;
         for (String productString : productStr) {
             msg += i + ". " + productString + "\n";
+            i++;
         }
 
         msg += "กรุณาพิมพ์หมายเลขด้านหน้าสินค้าเพื่อดูข้อมูล";
