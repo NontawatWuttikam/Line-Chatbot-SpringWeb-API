@@ -63,7 +63,7 @@ public class GiftshoplineapiApplication {
 			executionException.printStackTrace();
 		}
 		//ImageMessage img = new ImageMessage();
-		return new TextMessage(message.getText());
+		return new TextMessage(message.getText() + "TEST");
 	}
 
 }

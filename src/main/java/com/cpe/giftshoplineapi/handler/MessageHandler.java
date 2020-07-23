@@ -17,7 +17,7 @@ public class MessageHandler {
         public static final String PRODUCT_LIST = "รายการสินค้า";
         public static final String PROMOTION = "โปรโมชัน";
         public static final String STORE_PAGE = "เพจร้านค้า";
-        public static final String HELP = "ขั้นตอนการเลือกซื้อสินค้า";
+        public static final String HELP = "ขั้นตอนการซื้อสินค้า";
     }
 
 }
