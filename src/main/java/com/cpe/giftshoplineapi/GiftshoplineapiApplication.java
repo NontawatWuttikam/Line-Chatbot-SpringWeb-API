@@ -3,12 +3,15 @@ package com.cpe.giftshoplineapi;
 import com.cpe.giftshoplineapi.controller.TestController;
 import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
@@ -38,32 +43,39 @@ public class GiftshoplineapiApplication {
 
 
 	@EventMapping
-	public Message handleTextMessage(MessageEvent<TextMessageContent> e) throws ExecutionException, InterruptedException {
+	public List<Message> handleTextMessage(MessageEvent<TextMessageContent> e) throws ExecutionException, InterruptedException {
 		System.out.println("event: " + e);
 		TextMessageContent message = e.getMessage();
 		try {
 			Integer queryNumber = Integer.parseInt(message.getText());
 			String replyMessage = productMessageService.getSpecificProduct(queryNumber);
-			return new TextMessage(replyMessage);
+			//return new TextMessage(replyMessage);
 		}
 		catch(NumberFormatException ne) {
-			if (message.getText().equals(MessageHandler.RequestHandler.HELP))
-				return new TextMessage(MessageHandler.ReplyHandler.HELP);
+			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
+				List<Message> textMessages = new ArrayList<>();
+				textMessages.add(new TextMessage("Hello"));
+				textMessages.add(new TextMessage("GGWP"));
+				return textMessages;
+			}
 			else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
-				return new TextMessage(productMessageService.getAllProductLineMessage());
+				//return new TextMessage(productMessageService.getAllProductLineMessage());
 			}
 			else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
 				//return new TextMessage(productMessageService.getAllProductLineMessage());
 			}
-			else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
-				return new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE);
+			else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE)) {
+
+			}
+				//return new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE);
 		} catch (InterruptedException interruptedException) {
 			interruptedException.printStackTrace();
 		} catch (ExecutionException executionException) {
 			executionException.printStackTrace();
 		}
 		//ImageMessage img = new ImageMessage();
-		return new TextMessage(message.getText() + "TEST");
+		//return new TextMessage(message.getText() + "TEST");
+		return null;
 	}
 
 }
