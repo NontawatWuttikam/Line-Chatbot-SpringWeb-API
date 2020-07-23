@@ -63,6 +63,7 @@ public class GiftshoplineapiApplication {
 			URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
 			ImageMessage imageMessage = new ImageMessage(uri,uri);
 			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
+			client.pushMessage(pushMessage);
 			return Arrays.asList(textMessage,textMessage);
 		}
 		catch(NumberFormatException ne) {
