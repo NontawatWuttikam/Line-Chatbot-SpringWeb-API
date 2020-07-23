@@ -14,6 +14,9 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import com.model.Product;
+import com.model.ProductInfo;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,7 +27,11 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.lang.reflect.Array;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -49,29 +56,30 @@ public class GiftshoplineapiApplication {
 		try {
 			Integer queryNumber = Integer.parseInt(message.getText());
 			String replyMessage = productMessageService.getSpecificProduct(queryNumber);
-			//return new TextMessage(replyMessage);
+			TextMessage textMessage = new TextMessage(replyMessage);
+			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
+			URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
+			ImageMessage imageMessage = new ImageMessage(uri,uri);
+			return Arrays.asList(textMessage,imageMessage);
 		}
 		catch(NumberFormatException ne) {
 			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
-				List<Message> textMessages = new ArrayList<>();
-				textMessages.add(new TextMessage("Hello"));
-				textMessages.add(new TextMessage("GGWP"));
-				return textMessages;
+				return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.HELP));
 			}
 			else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
-				//return new TextMessage(productMessageService.getAllProductLineMessage());
+				return Arrays.asList(new TextMessage(productMessageService.getAllProductLineMessage()));
 			}
 			else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
 				//return new TextMessage(productMessageService.getAllProductLineMessage());
 			}
-			else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE)) {
-
-			}
-				//return new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE);
+			else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
+				return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE));
 		} catch (InterruptedException interruptedException) {
 			interruptedException.printStackTrace();
 		} catch (ExecutionException executionException) {
 			executionException.printStackTrace();
+		} catch (URISyntaxException uriSyntaxException) {
+			uriSyntaxException.printStackTrace();
 		}
 		//ImageMessage img = new ImageMessage();
 		//return new TextMessage(message.getText() + "TEST");

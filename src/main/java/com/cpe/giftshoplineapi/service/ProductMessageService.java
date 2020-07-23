@@ -58,4 +58,14 @@ public class ProductMessageService {
 
     }
 
+    public ProductInfo getProduct(Integer index) throws ExecutionException, InterruptedException {
+        String productInfo = "";
+        List<ProductInfo> productList = getAllProductList();
+        if (index > productList.size())
+            return null;
+
+        return productList.get(index-1);
+
+    }
+
 }
