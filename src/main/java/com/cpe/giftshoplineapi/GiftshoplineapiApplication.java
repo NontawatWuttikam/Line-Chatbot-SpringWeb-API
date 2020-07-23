@@ -38,7 +38,7 @@ public class GiftshoplineapiApplication {
 
 
 	@EventMapping
-	public Message handleTextMessage(MessageEvent<TextMessageContent> e) {
+	public Message handleTextMessage(MessageEvent<TextMessageContent> e) throws ExecutionException, InterruptedException {
 		System.out.println("event: " + e);
 		TextMessageContent message = e.getMessage();
 		try {
@@ -47,8 +47,16 @@ public class GiftshoplineapiApplication {
 			return new TextMessage(replyMessage);
 		}
 		catch(NumberFormatException ne) {
-			if (message.getText().equals("ขั้นตอนการซื้อสินค้า"))
-				return new TextMessage(MessageHandler.STORE_PAGE);
+			if (message.getText().equals(MessageHandler.RequestHandler.HELP))
+				return new TextMessage(MessageHandler.ReplyHandler.HELP);
+			else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
+				return new TextMessage(productMessageService.getAllProductLineMessage());
+			}
+			else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
+				//return new TextMessage(productMessageService.getAllProductLineMessage());
+			}
+			else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
+				return new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE);
 		} catch (InterruptedException interruptedException) {
 			interruptedException.printStackTrace();
 		} catch (ExecutionException executionException) {

@@ -24,7 +24,7 @@ public class ProductMessageService {
         productStr = productList.stream().map( o-> {
              String productstr = o.getName();
              if (o.getQuantity() == 0)
-                productstr = o.getName() + "(หมด)";
+                productstr = o.getName() + " (หมด)";
             return productstr;}).collect(Collectors.toList());
 
 
@@ -51,10 +51,9 @@ public class ProductMessageService {
             return "ไม่พบสินค้าที่คุณร้องขอ กรุณาเลือกใหม่อีกครั้ง";
 
         ProductInfo product = productList.get(index-1);
-        String productDescription = (product.getDescription() != null)? product.getDescription() : "";
         productInfo = product.getName() + "\n\n" +
-                      productDescription + "\n\n" +
-                      "จำนวนในคลัง : " + product.getQuantity();
+                      "จำนวนในคลัง : " + product.getQuantity() +"\n\n" +
+                      "Store Page : " + product.getStoreURL();
         return productInfo;
 
     }
