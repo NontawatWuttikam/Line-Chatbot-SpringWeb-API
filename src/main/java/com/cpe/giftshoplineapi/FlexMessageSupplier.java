@@ -53,7 +53,7 @@ public class FlexMessageSupplier {
     }
 
     private Box createInfoBox(Integer quantity) {
-        final Box place = Box.builder().width("")
+        final Box place = Box.builder()
                 .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
                 .contents(Arrays.asList(
@@ -61,7 +61,7 @@ public class FlexMessageSupplier {
                                 .text("จำนวนที่มีในคลัง")
                                 .color("#aaaaaa")
                                 .size(FlexFontSize.SM)
-                                .flex(1).wrap(false)
+                                .flex(5).wrap(false)
                                 .build(),
                         Text.builder()
                                 .text(String.valueOf(quantity))
