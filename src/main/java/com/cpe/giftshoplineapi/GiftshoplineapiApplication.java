@@ -5,6 +5,7 @@ import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -13,6 +14,7 @@ import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
+import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.model.Product;
@@ -27,12 +29,14 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 
 import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -51,6 +55,7 @@ public class GiftshoplineapiApplication {
 
 	FlexMessageSupplier flexMessageSupplier = new FlexMessageSupplier();
 
+	@Autowired
 	LineMessagingClient client;
 
 	@EventMapping
@@ -66,7 +71,8 @@ public class GiftshoplineapiApplication {
 //			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
-			return Arrays.asList(flexMessage);
+			this.reply(e.getReplyToken(),textMessage);
+			return Arrays.asList(textMessage);
 		}
 		catch(NumberFormatException ne) {
 			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
@@ -92,5 +98,20 @@ public class GiftshoplineapiApplication {
 		return null;
 
 	}
+
+	private void reply(@NonNull String replyToken, @NonNull Message message) {
+		reply(replyToken, Collections.singletonList(message));
+	}
+
+	private void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
+		try {
+			BotApiResponse response = client.replyMessage(
+					new ReplyMessage(replyToken, messages)
+			).get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 }

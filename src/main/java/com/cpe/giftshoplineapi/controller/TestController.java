@@ -1,5 +1,6 @@
 package com.cpe.giftshoplineapi.controller;
 
+import com.cpe.giftshoplineapi.FlexMessageSupplier;
 import com.cpe.giftshoplineapi.handler.MessageHandler;
 import com.cpe.giftshoplineapi.service.ProductMessageService;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -33,6 +34,8 @@ public class TestController {
 
     @Autowired
     ProductMessageService productMessageService;
+
+    FlexMessageSupplier flexMessageSupplier = new FlexMessageSupplier();
 
     public static final String COL_NAME="ProductInfo";
 
@@ -69,8 +72,10 @@ public class TestController {
             TextMessage textMessage = new TextMessage(replyMessage);
             ProductInfo productInfo = productMessageService.getProduct(queryNumber);
             URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
-            ImageMessage imageMessage = new ImageMessage(uri,uri);
-            return Arrays.asList(textMessage,imageMessage);
+//			ImageMessage imageMessage = new ImageMessage(uri,uri);
+//			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
+            Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
+            return Arrays.asList(flexMessage);
         }
         catch(NumberFormatException ne) {
             if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
