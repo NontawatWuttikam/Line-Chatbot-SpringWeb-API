@@ -66,9 +66,9 @@ public class FlexMessageSupplier {
                                 .flex(5).wrap(false)
                                 .build(),
                         Text.builder()
-                                .text(String.valueOf(quantity))
+                                .text((quantity > 0)? String.valueOf(quantity) : "หมด")
                                 .wrap(true)
-                                .color("#666666")
+                                .color((quantity > 0)? "#666666" : "FF0000")
                                 .flex(5)
                                 .build()
                 ))
@@ -129,7 +129,7 @@ public class FlexMessageSupplier {
         final Button callAction = Button.builder()
                 .style(Button.ButtonStyle.LINK)
                 .height(Button.ButtonHeight.MEDIUM)
-                .action(new URIAction("ไปที่หน้าร้าน", new URI(storeUrl),new URIAction.AltUri(new URI(storeUrl))))
+                .action(new URIAction("\uD83C\uDFEC ไปที่หน้าร้าน", new URI(storeUrl),new URIAction.AltUri(new URI(storeUrl))))
                 .build();
         final Separator separator = Separator.builder().build();
 
