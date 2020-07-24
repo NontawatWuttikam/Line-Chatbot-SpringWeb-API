@@ -72,7 +72,7 @@ public class GiftshoplineapiApplication {
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
 			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
-			this.reply(e.getReplyToken(),new TextMessage("Hello World!"));
+			this.reply(e.getReplyToken(),flexMessage);
 			return Arrays.asList(textMessage);
 		}
 		catch(NumberFormatException ne) {
