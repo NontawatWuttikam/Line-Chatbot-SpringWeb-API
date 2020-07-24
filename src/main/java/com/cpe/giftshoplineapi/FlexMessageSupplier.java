@@ -3,6 +3,7 @@ package com.cpe.giftshoplineapi;
 import com.google.common.base.Supplier;
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.FlexMessage;
+import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.flex.component.*;
 import com.linecorp.bot.model.message.flex.container.Bubble;
 import com.linecorp.bot.model.message.flex.unit.FlexBorderWidthSize;
@@ -24,7 +25,7 @@ public class FlexMessageSupplier {
         final Bubble bubbleContainer = Bubble.builder()
                 .hero(heroBlock)
                 .body(bodyBlock)
-                .footer(footerBlock).size(Bubble.BubbleSize.MICRO)
+                .footer(footerBlock).size(Bubble.BubbleSize.KILO)
                 .build();
         return new FlexMessage("Restaurant", bubbleContainer);
     }
@@ -39,10 +40,11 @@ public class FlexMessageSupplier {
     }
 
     private Box createBodyBlock(String name,Integer quantity,String description) {
-        final Text title = Text.builder()
-                .text(name)
-                .weight(Text.TextWeight.BOLD)
-                .size(FlexFontSize.LG).wrap(false)
+        final Box title = Box.builder().content(Text.builder()
+                    .text(name)
+                    .weight(Text.TextWeight.BOLD)
+                    .size(FlexFontSize.LG).wrap(false)
+                    .build())
                 .flex(10)
                 .build();
         final Box info = createInfoBox(description);
