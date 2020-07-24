@@ -11,12 +11,22 @@ public class ProductInfo {
     private Boolean isPromotion;
     private String promotionInfo;
     private String imageURL;
+    private String description;
 
-    public ProductInfo(String name, Long quantity,String storeURL, String imageURL) {
+    public ProductInfo(String name, Long quantity,String storeURL, String imageURL,String description) {
         this.name = name;
         this.quantity = quantity;
         this.storeURL = storeURL;
         this.imageURL = imageURL;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImageURL() {

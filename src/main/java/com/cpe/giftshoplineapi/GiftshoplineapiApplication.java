@@ -74,7 +74,8 @@ public class GiftshoplineapiApplication {
 					productInfo.getImageURL(),
 					productInfo.getStoreURL(),
 					productInfo.getName(),
-					productInfo.getQuantity().intValue());
+					productInfo.getQuantity().intValue(),
+					productInfo.getDescription());
 //			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
 //			this.push(e.getSource().getUserId(),Arrays.asList(flexMessage));
 //			this.reply(e.getReplyToken(),imageMessage);

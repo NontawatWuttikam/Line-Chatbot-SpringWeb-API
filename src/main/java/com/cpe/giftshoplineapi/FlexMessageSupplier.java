@@ -16,9 +16,9 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 
 public class FlexMessageSupplier {
-    public FlexMessage get(String imageUrl, String storeURL, String name, Integer quantity) throws URISyntaxException {
+    public FlexMessage get(String imageUrl, String storeURL, String name, Integer quantity,String description) throws URISyntaxException {
         final Image heroBlock = createHeroBlock(imageUrl);
-        final Box bodyBlock = createBodyBlock(name,quantity);
+        final Box bodyBlock = createBodyBlock(name,quantity,description);
         final Box footerBlock = createFooterBlock(storeURL);
 
         final Bubble bubbleContainer = Bubble.builder()
@@ -38,14 +38,14 @@ public class FlexMessageSupplier {
                 .build();
     }
 
-    private Box createBodyBlock(String name,Integer quantity) {
+    private Box createBodyBlock(String name,Integer quantity,String description) {
         final Text title = Text.builder()
                 .text(name)
                 .weight(Text.TextWeight.BOLD)
-                .size(FlexFontSize.XL).wrap(false)
+                .size(FlexFontSize.LG).wrap(false)
                 .flex(10)
                 .build();
-        final Box info = createInfoBox(quantity);
+        final Box info = createInfoBox(quantity,description);
 
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
@@ -53,7 +53,7 @@ public class FlexMessageSupplier {
                 .build();
     }
 
-    private Box createInfoBox(Integer quantity) {
+    private Box createInfoBox(Integer quantity,String description) {
         final Box place = Box.builder()
                 .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
@@ -70,7 +70,14 @@ public class FlexMessageSupplier {
                                 .color("#666666")
                                 .flex(5)
                                 .build()
-                )).build();
+                )).contents(Arrays.asList(
+                        Text.builder()
+                                .text(description)
+                                .color("#aaaaaa")
+                                .size(FlexFontSize.SM)
+                                .flex(5).wrap(false)
+                                .build()))
+                .build();
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
                 .margin(FlexMarginSize.LG)
