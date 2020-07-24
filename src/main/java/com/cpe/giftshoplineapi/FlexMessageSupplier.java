@@ -30,7 +30,7 @@ public class FlexMessageSupplier {
 
     private Image createHeroBlock(String url) throws URISyntaxException {
         return Image.builder()
-                .url(new URIBuilder().setPath(url).build())
+                .url(new URI(url))
                 .size(Image.ImageSize.FULL_WIDTH)
                 .aspectRatio(Image.ImageAspectRatio.R20TO13)
                 .aspectMode(Image.ImageAspectMode.Cover)

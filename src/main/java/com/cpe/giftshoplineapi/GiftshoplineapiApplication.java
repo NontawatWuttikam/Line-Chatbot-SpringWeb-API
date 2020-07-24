@@ -72,6 +72,7 @@ public class GiftshoplineapiApplication {
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
 			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
+			this.push(e.getSource().getUserId(),Arrays.asList(flexMessage));
 			this.reply(e.getReplyToken(),imageMessage);
 			return Arrays.asList(textMessage);
 		}
