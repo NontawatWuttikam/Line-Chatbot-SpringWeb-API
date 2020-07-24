@@ -67,12 +67,14 @@ public class GiftshoplineapiApplication {
 			String replyMessage = productMessageService.getSpecificProduct(queryNumber);
 			TextMessage textMessage = new TextMessage(replyMessage);
 			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
-			URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
-//			ImageMessage imageMessage = new ImageMessage(uri,uri);
+			URI uri = new URIBuilder().setPath("https://via.placeholder.com/300.png/09f/fff\n" +
+					"\n" +
+					"C/O https://placeholder.com/").build();
+			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
 			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
-			this.reply(e.getReplyToken(),flexMessage);
+			this.reply(e.getReplyToken(),imageMessage);
 			return Arrays.asList(textMessage);
 		}
 		catch(NumberFormatException ne) {
