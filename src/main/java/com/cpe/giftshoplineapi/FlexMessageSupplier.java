@@ -5,6 +5,7 @@ import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.flex.component.*;
 import com.linecorp.bot.model.message.flex.container.Bubble;
+import com.linecorp.bot.model.message.flex.unit.FlexBorderWidthSize;
 import com.linecorp.bot.model.message.flex.unit.FlexFontSize;
 import com.linecorp.bot.model.message.flex.unit.FlexLayout;
 import com.linecorp.bot.model.message.flex.unit.FlexMarginSize;
@@ -41,7 +42,7 @@ public class FlexMessageSupplier {
         final Text title = Text.builder()
                 .text(name)
                 .weight(Text.TextWeight.BOLD)
-                .size(FlexFontSize.XL)
+                .size(FlexFontSize.XL).wrap(false)
                 .build();
         final Box info = createInfoBox(quantity);
 
@@ -52,7 +53,7 @@ public class FlexMessageSupplier {
     }
 
     private Box createInfoBox(Integer quantity) {
-        final Box place = Box.builder()
+        final Box place = Box.builder().width("")
                 .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
                 .contents(Arrays.asList(
@@ -60,7 +61,7 @@ public class FlexMessageSupplier {
                                 .text("จำนวนที่มีในคลัง")
                                 .color("#aaaaaa")
                                 .size(FlexFontSize.SM)
-                                .flex(1)
+                                .flex(1).wrap(false)
                                 .build(),
                         Text.builder()
                                 .text(String.valueOf(quantity))
