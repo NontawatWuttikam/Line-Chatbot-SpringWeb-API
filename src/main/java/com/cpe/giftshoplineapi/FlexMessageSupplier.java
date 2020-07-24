@@ -3,7 +3,6 @@ package com.cpe.giftshoplineapi;
 import com.google.common.base.Supplier;
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.FlexMessage;
-import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.flex.component.*;
 import com.linecorp.bot.model.message.flex.container.Bubble;
 import com.linecorp.bot.model.message.flex.unit.FlexBorderWidthSize;
@@ -40,12 +39,11 @@ public class FlexMessageSupplier {
     }
 
     private Box createBodyBlock(String name,Integer quantity,String description) {
-        final Box title = Box.builder().content(Text.builder()
-                    .text(name)
-                    .weight(Text.TextWeight.BOLD)
-                    .size(FlexFontSize.LG).wrap(false)
-                    .build())
-                .flex(10)
+        final Text title = Text.builder()
+                .text(name)
+                .weight(Text.TextWeight.BOLD)
+                .size(FlexFontSize.LG).wrap(false)
+                .flex(10).maxLines(5)
                 .build();
         final Box info = createInfoBox(description);
         final Box quantityB = createQuantityfoBox(quantity);
