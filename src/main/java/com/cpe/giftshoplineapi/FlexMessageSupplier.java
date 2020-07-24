@@ -104,7 +104,7 @@ public class FlexMessageSupplier {
         final Button callAction = Button.builder()
                 .style(Button.ButtonStyle.LINK)
                 .height(Button.ButtonHeight.MEDIUM)
-                .action(new URIAction("ไปที่หน้าร้าน", new URI(storeUrl), null))
+                .action(new URIAction("ไปที่หน้าร้าน", new URI(storeUrl),new URIAction.AltUri(new URI(storeUrl))))
                 .build();
         final Separator separator = Separator.builder().build();
 
