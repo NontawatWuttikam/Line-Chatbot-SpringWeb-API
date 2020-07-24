@@ -49,6 +49,8 @@ public class GiftshoplineapiApplication {
 	@Autowired
 	ProductMessageService productMessageService;
 
+	FlexMessageSupplier flexMessageSupplier = new FlexMessageSupplier();
+
 	LineMessagingClient client;
 
 	@EventMapping
@@ -61,10 +63,10 @@ public class GiftshoplineapiApplication {
 			TextMessage textMessage = new TextMessage(replyMessage);
 			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
 			URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
-			ImageMessage imageMessage = new ImageMessage(uri,uri);
-			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
-			client.pushMessage(pushMessage);
-			return Arrays.asList(textMessage,textMessage);
+//			ImageMessage imageMessage = new ImageMessage(uri,uri);
+//			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
+			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
+			return Arrays.asList(flexMessage);
 		}
 		catch(NumberFormatException ne) {
 			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
