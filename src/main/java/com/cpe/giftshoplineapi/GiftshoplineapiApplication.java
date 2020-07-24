@@ -71,6 +71,7 @@ public class GiftshoplineapiApplication {
 //			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
+			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
 			this.reply(e.getReplyToken(),new TextMessage("Hello World!"));
 			return Arrays.asList(textMessage);
 		}
@@ -107,6 +108,15 @@ public class GiftshoplineapiApplication {
 		try {
 			BotApiResponse response = client.replyMessage(
 					new ReplyMessage(replyToken, messages)
+			).get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	private void push(@NonNull String userId, @NonNull List<Message> messages) {
+		try {
+			BotApiResponse response = client.pushMessage(
+					new PushMessage(userId, messages)
 			).get();
 		} catch (InterruptedException | ExecutionException e) {
 			throw new RuntimeException(e);
