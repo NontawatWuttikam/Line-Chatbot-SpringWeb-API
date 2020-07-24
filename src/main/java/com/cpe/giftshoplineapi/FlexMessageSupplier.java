@@ -24,7 +24,7 @@ public class FlexMessageSupplier {
         final Bubble bubbleContainer = Bubble.builder()
                 .hero(heroBlock)
                 .body(bodyBlock)
-                .footer(footerBlock)
+                .footer(footerBlock).size(Bubble.BubbleSize.MICRO)
                 .build();
         return new FlexMessage("Restaurant", bubbleContainer);
     }
@@ -45,15 +45,16 @@ public class FlexMessageSupplier {
                 .size(FlexFontSize.LG).wrap(false)
                 .flex(10)
                 .build();
-        final Box info = createInfoBox(quantity,description);
+        final Box info = createInfoBox(description);
+        final Box quantityB = createQuantityfoBox(quantity);
 
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
-                .contents(Arrays.asList(title, info))
+                .contents(Arrays.asList(title,quantityB, info))
                 .build();
     }
 
-    private Box createInfoBox(Integer quantity,String description) {
+    private Box createQuantityfoBox(Integer quantity) {
         final Box place = Box.builder()
                 .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
@@ -70,18 +71,33 @@ public class FlexMessageSupplier {
                                 .color("#666666")
                                 .flex(5)
                                 .build()
-                )).contents(Arrays.asList(
-                        Text.builder()
-                                .text(description)
-                                .color("#aaaaaa")
-                                .size(FlexFontSize.SM)
-                                .flex(5).wrap(false)
-                                .build()))
+                ))
                 .build();
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
                 .margin(FlexMarginSize.LG)
+                .spacing(FlexMarginSize.SM).flex(10)
+                .contents(Arrays.asList(place))
+                .build();
+    }
+
+    private Box createInfoBox(String description) {
+        final Box place = Box.builder()
+                .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
+                .contents(Arrays.asList(
+                        Text.builder()
+                                .text(description)
+                                .wrap(true)
+                                .color("#666666")
+                                .flex(10)
+                                .build()
+                ))
+                .build();
+        return Box.builder()
+                .layout(FlexLayout.VERTICAL)
+                .margin(FlexMarginSize.LG)
+                .spacing(FlexMarginSize.SM).flex(10)
                 .contents(Arrays.asList(place))
                 .build();
     }
