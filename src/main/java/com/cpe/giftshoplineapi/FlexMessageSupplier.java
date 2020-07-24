@@ -15,15 +15,15 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 
 public class FlexMessageSupplier {
-    public FlexMessage get(String url) throws URISyntaxException {
-        final Image heroBlock = createHeroBlock(url);
-        final Box bodyBlock = createBodyBlock();
-//        final Box footerBlock = createFooterBlock();
+    public FlexMessage get(String imageUrl, String storeURL, String name, Integer quantity) throws URISyntaxException {
+        final Image heroBlock = createHeroBlock(imageUrl);
+        final Box bodyBlock = createBodyBlock(name,quantity);
+        final Box footerBlock = createFooterBlock(storeURL);
 
         final Bubble bubbleContainer = Bubble.builder()
                 .hero(heroBlock)
                 .body(bodyBlock)
-//                .footer(footerBlock)
+                .footer(footerBlock)
                 .build();
         return new FlexMessage("Restaurant", bubbleContainer);
     }
@@ -37,13 +37,13 @@ public class FlexMessageSupplier {
                 .build();
     }
 
-    private Box createBodyBlock() {
+    private Box createBodyBlock(String name,Integer quantity) {
         final Text title = Text.builder()
-                .text("Brown Cafe")
+                .text(name)
                 .weight(Text.TextWeight.BOLD)
                 .size(FlexFontSize.XL)
                 .build();
-        final Box info = createInfoBox();
+        final Box info = createInfoBox(quantity);
 
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
@@ -51,38 +51,21 @@ public class FlexMessageSupplier {
                 .build();
     }
 
-    private Box createInfoBox() {
+    private Box createInfoBox(Integer quantity) {
         final Box place = Box.builder()
                 .layout(FlexLayout.BASELINE)
                 .spacing(FlexMarginSize.SM)
                 .contents(Arrays.asList(
                         Text.builder()
-                                .text("Place")
+                                .text("จำนวนที่มีในคลัง")
                                 .color("#aaaaaa")
                                 .size(FlexFontSize.SM)
                                 .flex(1)
                                 .build(),
                         Text.builder()
-                                .text("Silom, Bangkok")
+                                .text(String.valueOf(quantity))
                                 .wrap(true)
                                 .color("#666666")
-                                .flex(5)
-                                .build()
-                )).build();
-        final Box time = Box.builder()
-                .layout(FlexLayout.BASELINE)
-                .spacing(FlexMarginSize.SM)
-                .contents(Arrays.asList(
-                        Text.builder().text("Time")
-                                .color("#aaaaaa")
-                                .size(FlexFontSize.SM)
-                                .flex(1)
-                                .build(),
-                        Text.builder()
-                                .text("10:00 - 23:00")
-                                .wrap(true)
-                                .color("#666666")
-                                .size(FlexFontSize.SM)
                                 .flex(5)
                                 .build()
                 )).build();
@@ -90,7 +73,7 @@ public class FlexMessageSupplier {
                 .layout(FlexLayout.VERTICAL)
                 .margin(FlexMarginSize.LG)
                 .spacing(FlexMarginSize.SM)
-                .contents(Arrays.asList(place, time))
+                .contents(Arrays.asList(place))
                 .build();
     }
 
@@ -116,25 +99,20 @@ public class FlexMessageSupplier {
 //                .build();
 //    }
 
-//    private Box createFooterBlock() {
-//        final Spacer spacer = Spacer.builder().size(FlexMarginSize.SM).build();
-//        final Button callAction = Button.builder()
-//                .style(Button.ButtonStyle.LINK)
-//                .height(Button.ButtonHeight.MEDIUM)
-//                .action(new URIAction("CALL", "tel:00000"))
-//                .build();
-//        final Separator separator = Separator.builder().build();
-//        final Button websiteAction = Button.builder()
-//                .style(Button.ButtonStyle.LINK)
-//                .height(Button.ButtonHeight.SMALL)
-//                .action(new URIAction("WEBSITE", "https://example.com"))
-//                .build();
-//
-//        return Box.builder()
-//                .layout(FlexLayout.VERTICAL)
-//                .spacing(FlexMarginSize.SM)
-//                .contents(Arrays.asList(spacer, callAction, separator, websiteAction))
-//                .build();
-//
-//    }
+    private Box createFooterBlock(String storeUrl) throws URISyntaxException {
+        final Spacer spacer = Spacer.builder().size(FlexMarginSize.SM).build();
+        final Separator separator = Separator.builder().build();
+        final Button websiteAction = Button.builder()
+                .style(Button.ButtonStyle.LINK)
+                .height(Button.ButtonHeight.SMALL)
+                .action(new URIAction("ไปหน้าสินค้า", new URI(storeUrl),new URIAction.AltUri(new URI(storeUrl))))
+                .build();
+
+        return Box.builder()
+                .layout(FlexLayout.VERTICAL)
+                .spacing(FlexMarginSize.SM)
+                .contents(Arrays.asList(spacer, separator, websiteAction))
+                .build();
+
+    }
 }

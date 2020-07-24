@@ -65,39 +65,40 @@ public class TestController {
 
     @GetMapping("/test2")
     public List<Message> handleTextMessage() throws ExecutionException, InterruptedException {
-        TextMessageContent message = new TextMessageContent("1","1");
-        try {
-            Integer queryNumber = Integer.parseInt(message.getText());
-            String replyMessage = productMessageService.getSpecificProduct(queryNumber);
-            TextMessage textMessage = new TextMessage(replyMessage);
-            ProductInfo productInfo = productMessageService.getProduct(queryNumber);
-            URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
-//			ImageMessage imageMessage = new ImageMessage(uri,uri);
-//			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
-            Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
-            return Arrays.asList(flexMessage);
-        }
-        catch(NumberFormatException ne) {
-            if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
-                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.HELP));
-            }
-            else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
-                return Arrays.asList(new TextMessage(productMessageService.getAllProductLineMessage()));
-            }
-            else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
-                //return new TextMessage(productMessageService.getAllProductLineMessage());
-            }
-            else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
-                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE));
-        } catch (InterruptedException interruptedException) {
-            interruptedException.printStackTrace();
-        } catch (ExecutionException executionException) {
-            executionException.printStackTrace();
-        } catch (URISyntaxException uriSyntaxException) {
-            uriSyntaxException.printStackTrace();
-        }
-        //ImageMessage img = new ImageMessage();
-        //return new TextMessage(message.getText() + "TEST");
+//        TextMessageContent message = new TextMessageContent("1","1");
+//        try {
+//            Integer queryNumber = Integer.parseInt(message.getText());
+//            String replyMessage = productMessageService.getSpecificProduct(queryNumber);
+//            TextMessage textMessage = new TextMessage(replyMessage);
+//            ProductInfo productInfo = productMessageService.getProduct(queryNumber);
+//            URI uri = new URIBuilder().setPath(productInfo.getImageURL()).build();
+////			ImageMessage imageMessage = new ImageMessage(uri,uri);
+////			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
+//            Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
+//            return Arrays.asList(flexMessage);
+//        }
+//        catch(NumberFormatException ne) {
+//            if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
+//                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.HELP));
+//            }
+//            else if (message.getText().equals(MessageHandler.RequestHandler.PRODUCT_LIST)) {
+//                return Arrays.asList(new TextMessage(productMessageService.getAllProductLineMessage()));
+//            }
+//            else if (message.getText().equals(MessageHandler.RequestHandler.PROMOTION)) {
+//                //return new TextMessage(productMessageService.getAllProductLineMessage());
+//            }
+//            else if (message.getText().equals(MessageHandler.RequestHandler.STORE_PAGE))
+//                return Arrays.asList(new TextMessage(MessageHandler.ReplyHandler.STORE_PAGE));
+//        } catch (InterruptedException interruptedException) {
+//            interruptedException.printStackTrace();
+//        } catch (ExecutionException executionException) {
+//            executionException.printStackTrace();
+//        } catch (URISyntaxException uriSyntaxException) {
+//            uriSyntaxException.printStackTrace();
+//        }
+//        //ImageMessage img = new ImageMessage();
+//        //return new TextMessage(message.getText() + "TEST");
+//        return null;
         return null;
     }
 

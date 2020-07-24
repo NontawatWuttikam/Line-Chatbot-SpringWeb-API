@@ -68,13 +68,17 @@ public class GiftshoplineapiApplication {
 			TextMessage textMessage = new TextMessage(replyMessage);
 			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
 			URI uri = new URI("https://via.placeholder.com/300.png/09f/fff");
-			ImageMessage imageMessage = new ImageMessage(uri,uri);
+//			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
-			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
-			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
-			this.push(e.getSource().getUserId(),Arrays.asList(flexMessage));
-			this.reply(e.getReplyToken(),imageMessage);
-			return Arrays.asList(textMessage);
+			Message flexMessage = flexMessageSupplier.get(
+					productInfo.getImageURL(),
+					productInfo.getStoreURL(),
+					productInfo.getName(),
+					productInfo.getQuantity().intValue());
+//			this.push(e.getSource().getUserId(),Arrays.asList(new TextMessage("this is push")));
+//			this.push(e.getSource().getUserId(),Arrays.asList(flexMessage));
+//			this.reply(e.getReplyToken(),imageMessage);
+			return Arrays.asList(flexMessage);
 		}
 		catch(NumberFormatException ne) {
 			if (message.getText().equals(MessageHandler.RequestHandler.HELP)) {
