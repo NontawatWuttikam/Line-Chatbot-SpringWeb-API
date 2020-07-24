@@ -71,7 +71,7 @@ public class GiftshoplineapiApplication {
 //			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
-			this.reply(e.getReplyToken(),textMessage);
+			this.reply(e.getReplyToken(),new TextMessage("Hello World!"));
 			return Arrays.asList(textMessage);
 		}
 		catch(NumberFormatException ne) {
