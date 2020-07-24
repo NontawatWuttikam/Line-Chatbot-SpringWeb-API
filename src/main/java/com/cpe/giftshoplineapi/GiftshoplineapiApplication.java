@@ -67,9 +67,7 @@ public class GiftshoplineapiApplication {
 			String replyMessage = productMessageService.getSpecificProduct(queryNumber);
 			TextMessage textMessage = new TextMessage(replyMessage);
 			ProductInfo productInfo = productMessageService.getProduct(queryNumber);
-			URI uri = new URIBuilder().setPath("https://via.placeholder.com/300.png/09f/fff\n" +
-					"\n" +
-					"C/O https://placeholder.com/").build();
+			URI uri = new URI("https://via.placeholder.com/300.png/09f/fff");
 			ImageMessage imageMessage = new ImageMessage(uri,uri);
 //			PushMessage pushMessage = new PushMessage(e.getSource().getSenderId(),textMessage);
 			Message flexMessage = flexMessageSupplier.get(productInfo.getImageURL());
