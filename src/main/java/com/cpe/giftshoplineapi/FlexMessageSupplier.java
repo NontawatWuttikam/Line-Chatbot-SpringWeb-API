@@ -43,6 +43,7 @@ public class FlexMessageSupplier {
                 .text(name)
                 .weight(Text.TextWeight.BOLD)
                 .size(FlexFontSize.XL).wrap(false)
+                .flex(10)
                 .build();
         final Box info = createInfoBox(quantity);
 
