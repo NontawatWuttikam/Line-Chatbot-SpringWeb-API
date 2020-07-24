@@ -101,17 +101,17 @@ public class FlexMessageSupplier {
 
     private Box createFooterBlock(String storeUrl) throws URISyntaxException {
         final Spacer spacer = Spacer.builder().size(FlexMarginSize.SM).build();
-        final Separator separator = Separator.builder().build();
-        final Button websiteAction = Button.builder()
+        final Button callAction = Button.builder()
                 .style(Button.ButtonStyle.LINK)
-                .height(Button.ButtonHeight.SMALL)
-                .action(new URIAction("ไปหน้าสินค้า", new URI(storeUrl),new URIAction.AltUri(new URI(storeUrl))))
+                .height(Button.ButtonHeight.MEDIUM)
+                .action(new URIAction("ไปที่หน้าร้าน", new URI(storeUrl), null))
                 .build();
+        final Separator separator = Separator.builder().build();
 
         return Box.builder()
                 .layout(FlexLayout.VERTICAL)
                 .spacing(FlexMarginSize.SM)
-                .contents(Arrays.asList(spacer, separator, websiteAction))
+                .contents(Arrays.asList(spacer, callAction, separator))
                 .build();
 
     }
